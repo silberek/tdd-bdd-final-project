@@ -90,7 +90,6 @@ def create_products():
     # Uncomment this line of code once you implement READ A PRODUCT
     #
     location_url = url_for("get_products", product_id=product.id, _external=True)
-    #location_url = "/"  # delete once READ is implemented
     return jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
 
 
@@ -132,6 +131,8 @@ def list_products():
 ######################################################################
 # READ A PRODUCT
 ######################################################################
+
+
 @app.route("/products/<int:product_id>", methods=["GET"])
 def get_products(product_id):
     """
@@ -139,7 +140,7 @@ def get_products(product_id):
 
     This endpoint will return a Product based on it's id
     """
-    app.logger.info(f"Request to Retrieve a product with id {product_id}")
+    app.logger.info("Request to Retrieve a product with id [%s]", product_id)
 
     product = Product.find(product_id)
     if not product:
@@ -152,13 +153,14 @@ def get_products(product_id):
 # U P D A T E   A   P R O D U C T
 ######################################################################
 
+
 @app.route("/products/<int:product_id>", methods=["PUT"])
 def update_products(product_id):
     """
     Update a Product
     This endpoint will update a Product based the body that is posted
     """
-    app.logger.info(f"Request to Update a product with id {product_id}")
+    app.logger.info("Request to Update a product with id [%s]", product_id)
     check_content_type("application/json")
     product = Product.find(product_id)
     if not product:
